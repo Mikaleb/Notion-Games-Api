@@ -1,4 +1,4 @@
-<!-- <img src="example.png" /> -->
+<img src="example.png" />
 
 # Notion-Games-Api
 
