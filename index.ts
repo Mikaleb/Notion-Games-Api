@@ -2,10 +2,10 @@ import {
   QueryDatabaseResponse,
   GetPagePropertyParameters,
   PropertyItemPropertyItemListResponse,
-  PropertyItemObjectResponse,
 } from '@notionhq/client/build/src/api-endpoints'
 
 const { Client } = require('@notionhq/client')
+
 const dotenv = require('dotenv')
 const axios = require('axios')
 
@@ -13,20 +13,18 @@ dotenv.config()
 const notion = new Client({ auth: process.env.NOTION_KEY })
 const notionPageId = process.env.NOTION_PAGE_ID
 
-const apiUrl = 'https://api.themoviedb.org/3/search/multi'
+const apiUrl = 'https://api.rawg.io/api/'
 
-function getApiResults(movieTitle: string) {
+function getApiResults(search: string) {
   return axios({
-    url: apiUrl,
+    url: apiUrl + 'games',
     params: {
-      query: movieTitle,
-      page: 1,
-      include_adult: false,
-      language: 'fr',
-      api_key: process.env.TMDB_API_KEY,
+      search: search,
+      key: process.env.API_KEY,
     },
   })
     .then((response: { data: any }) => {
+      console.log('response api', response)
       const { data } = response
       return data
     })
@@ -45,46 +43,71 @@ function getNotionProperty(id: any) {
     property_id: 'title',
   } as GetPagePropertyParameters)
 }
+function getMultiSelectVals(result: any, tagName: string) {
+  const langs = ['eng', 'fre']
+  return result[tagName]
+    .filter((res: any) => langs.includes(res.language) || !res.language)
+    .map((res: any) => {
+      return {
+        name: res.name,
+      }
+    })
+}
+
+function getScreenshot(result: any) {
+  const screenshots = result.short_screenshots.map(
+    (res: { image: string | string[] }) => {
+      if (res.image.includes('/media/screenshots')) {
+        return res
+      }
+    }
+  )
+  console.log('screenshots', screenshots)
+  if (screenshots.length > 0) return screenshots[0]?.image
+  return result.background_image
+}
 
 function updateNotionPage(pageId: any, result: any) {
-  const tmdbImageCoverUrl =
-    'https://image.tmdb.org/t/p/original' + result.backdrop_path
-  const tmdbPosterUrl =
-    'https://image.tmdb.org/t/p/original' + result.poster_path
-
-  console.log(
-    '🚀 ~ file: index.ts ~ line 53 ~ updateNotionPage ~ tmdbPosterUrl',
-    tmdbPosterUrl
-  )
   notion.pages
     .update({
       page_id: pageId,
       properties: {
-        Poster: {
+        Screenshot: {
           files: [
             {
               type: 'external',
               name: pageId,
               external: {
-                url: tmdbPosterUrl,
+                url: getScreenshot(result),
               },
             },
           ],
         },
-        Synopsis: {
+        'Game found': {
           rich_text: [
             {
               type: 'text',
               text: {
-                content: result.overview,
+                content: result.name,
               },
             },
           ],
         },
+        Released: {
+          date: {
+            start: result.released,
+          },
+        },
+        Genres: {
+          multi_select: getMultiSelectVals(result, 'genres'),
+        },
+        Tags: {
+          multi_select: getMultiSelectVals(result, 'tags'),
+        },
       },
       cover: {
         external: {
-          url: tmdbImageCoverUrl,
+          url: result.background_image,
         },
         type: 'external',
       },
@@ -93,7 +116,7 @@ function updateNotionPage(pageId: any, result: any) {
       console.log(error)
     })
     .then(() => {
-      console.log('\n✅ Notion database is synced with Bing.')
+      console.log('\n✅ Notion database is synced with Rawg.')
     })
 }
 

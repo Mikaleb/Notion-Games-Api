@@ -39,19 +39,17 @@ const axios = require('axios')
 dotenv.config()
 const notion = new Client({ auth: process.env.NOTION_KEY })
 const notionPageId = process.env.NOTION_PAGE_ID
-const apiUrl = 'https://api.themoviedb.org/3/search/multi'
-function getApiResults(movieTitle) {
+const apiUrl = 'https://api.rawg.io/api/'
+function getApiResults(search) {
   return axios({
-    url: apiUrl,
+    url: apiUrl + 'games',
     params: {
-      query: movieTitle,
-      page: 1,
-      include_adult: false,
-      language: 'fr',
-      api_key: process.env.TMDB_API_KEY,
+      search: search,
+      key: process.env.API_KEY,
     },
   })
     .then((response) => {
+      console.log('response api', response)
       const { data } = response
       return data
     })
@@ -69,44 +67,69 @@ function getNotionProperty(id) {
     property_id: 'title',
   })
 }
+function getMultiSelectVals(result, tagName) {
+  const langs = ['eng', 'fre']
+  return result[tagName]
+    .filter((res) => langs.includes(res.language) || !res.language)
+    .map((res) => {
+      return {
+        name: res.name,
+      }
+    })
+}
+function getScreenshot(result) {
+  var _a
+  const screenshots = result.short_screenshots.map((res) => {
+    if (res.image.includes('/media/screenshots')) {
+      return res
+    }
+  })
+  console.log('screenshots', screenshots)
+  if (screenshots.length > 0)
+    return (_a = screenshots[0]) === null || _a === void 0 ? void 0 : _a.image
+  return result.background_image
+}
 function updateNotionPage(pageId, result) {
-  const tmdbImageCoverUrl =
-    'https://image.tmdb.org/t/p/original' + result.backdrop_path
-  const tmdbPosterUrl =
-    'https://image.tmdb.org/t/p/original' + result.poster_path
-  console.log(
-    '🚀 ~ file: index.ts ~ line 53 ~ updateNotionPage ~ tmdbPosterUrl',
-    tmdbPosterUrl
-  )
   notion.pages
     .update({
       page_id: pageId,
       properties: {
-        Poster: {
+        Screenshot: {
           files: [
             {
               type: 'external',
               name: pageId,
               external: {
-                url: tmdbPosterUrl,
+                url: getScreenshot(result),
               },
             },
           ],
         },
-        Synopsis: {
+        'Game found': {
           rich_text: [
             {
               type: 'text',
               text: {
-                content: result.overview,
+                content: result.name,
               },
             },
           ],
         },
+        Released: {
+          date: {
+            start: result.released,
+          },
+        },
+        Genres: {
+          multi_select: getMultiSelectVals(result, 'genres'),
+        },
+        Tags: {
+          multi_select: getMultiSelectVals(result, 'tags'),
+        },
       },
       cover: {
         external: {
-          url: tmdbImageCoverUrl,
+          url: result.background_image,
         },
         type: 'external',
       },
@@ -115,7 +138,7 @@ function updateNotionPage(pageId, result) {
       console.log(error)
     })
     .then(() => {
-      console.log('\n✅ Notion database is synced with Bing.')
+      console.log('\n✅ Notion database is synced with Rawg.')
     })
 }
 function run() {

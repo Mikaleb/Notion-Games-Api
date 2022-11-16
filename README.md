@@ -1,11 +1,13 @@
-<img src="example.png" />
+<!-- <img src="example.png" /> -->
 
-# Notion-Movies-Api
+# Notion-Games-Api
 
-[![GitHub license](https://img.shields.io/github/license/Mikaleb/README-Model)](https://github.com/Mikaleb/Bing-Daily-Notion-cover/blob/main/LICENSE.md) [![Contributor Covenant](https://img.shields.io/badge/Contributor%20Covenant-2.1-4baaaa.svg)](code_of_conduct.md)
-[![Known Vulnerabilities](https://snyk.io/test/github/Mikaleb/Bing-Daily-Notion-cover/badge.svg)](https://snyk.io/test/github/Mikaleb/Bing-Daily-Notion-cover) [![GitHub issues](https://img.shields.io/github/issues/Mikaleb/Bing-Daily-Notion-cover)](https://github.com/Mikaleb/Bing-Daily-Notion-cover/issues)
+[![GitHub license](https://img.shields.io/github/license/Mikaleb/README-Model)](https://github.com/Mikaleb/Notion-Games-Api/blob/main/LICENSE.md) [![Contributor Covenant](https://img.shields.io/badge/Contributor%20Covenant-2.1-4baaaa.svg)](code_of_conduct.md)
+[![Known Vulnerabilities](https://snyk.io/test/github/Mikaleb/Notion-Games-Api/badge.svg)](https://snyk.io/test/github/Mikaleb/Notion-Games-Api) [![GitHub issues](https://img.shields.io/github/issues/Mikaleb/Notion-Games-Api)](https://github.com/Mikaleb/Notion-Games-Api/issues)
 
-This Notion integration syncs the daily Bing image of the day for a specific repo to a Notion Page.
+![Notion](https://img.shields.io/badge/Notion-%23000000.svg?style=for-the-badge&logo=notion&logoColor=white) && ![Rawg](https://img.shields.io/badge/Rawg-%23151515?style=for-the-badge)
+
+This Notion integration syncs the daily Bing image of the day for a specific repo to a Notion Page
 
 ## Running the project locally
 
@@ -27,6 +29,8 @@ NOTION_PAGE_ID=<notion-page-id>
 ```
 
 You can create your Notion API key [here](www.notion.com/my-integrations).
+Notion **api** [this way](https://developers.notion.com/reference/patch-page)
+Rawg **api** [this way](https://api.rawg.io/docs/)
 
 ### 3. Run code
 
@@ -42,15 +46,15 @@ yarn start
 
 ## FAQ
 
-Please see [here](https://github.com/Mikaleb/Bing-Daily-Notion-cover/wiki/FAQ) for a list of frequently asked questions.
+Please see [here](https://github.com/Mikaleb/Notion-Games-Api/wiki/FAQ) for a list of frequently asked questions.
 
 ## Licensing
 
-See the [LICENSE](https://github.com/Mikaleb/Bing-Daily-Notion-cover/blob/main/LICENSE.md) file for licensing information as it pertains to
+See the [LICENSE](https://github.com/Mikaleb/Notion-Games-Api/blob/main/LICENSE.md) file for licensing information as it pertains to
 files in this repository.
 
 ## Contribution
 
-Bing-Daily-Notion-cover is an open-source project and we are very happy to accept community contributions. Please refer to Contributing to [Bing-Daily-Notion-cover page](https://github.com/Mikaleb/Bing-Daily-Notion-cover/blob/main/CONTRIBUTING.md) for more details.
+Notion-Games-Api is an open-source project and we are very happy to accept community contributions. Please refer to Contributing to [Notion-Games-Api page](https://github.com/Mikaleb/Notion-Games-Api/blob/main/CONTRIBUTING.md) for more details.
 
-If you run into a bug or miss a feature, please [open an issue](https://github.com/Mikaleb/Bing-Daily-Notion-cover/issues) in this repository.
+If you run into a bug or miss a feature, please [open an issue](https://github.com/Mikaleb/Notion-Games-Api/issues) in this repository.

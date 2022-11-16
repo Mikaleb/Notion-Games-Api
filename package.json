@@ -1,8 +1,8 @@
 {
-  "name": "notion-movies-api",
+  "name": "notion-games-api",
   "version": "1.0.0",
   "main": "index.js",
-  "repository": "https://github.com/Mikaleb/Notion-Movies-Api.git",
+  "repository": "https://github.com/Mikaleb/Notion-Games-Api.git",
   "author": "Mikaleb <mikaleb@live.fr>",
   "license": "GPL-3.0-or-later",
   "private": false,
