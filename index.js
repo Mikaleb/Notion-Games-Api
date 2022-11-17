@@ -49,7 +49,6 @@ function getApiResults(search) {
     },
   })
     .then((response) => {
-      console.log('response api', response)
       const { data } = response
       return data
     })
@@ -78,15 +77,18 @@ function getMultiSelectVals(result, tagName) {
     })
 }
 function getScreenshot(result) {
-  var _a
   const screenshots = result.short_screenshots.map((res) => {
     if (res.image.includes('/media/screenshots')) {
       return res
     }
   })
   console.log('screenshots', screenshots)
-  if (screenshots.length > 0)
-    return (_a = screenshots[0]) === null || _a === void 0 ? void 0 : _a.image
+  // get first element that is not undefined
+  const screenshot = screenshots.find((res) => res)
+  if (screenshot)
+    return screenshot === null || screenshot === void 0
+      ? void 0
+      : screenshot.image
   return result.background_image
 }
 function updateNotionPage(pageId, result) {
@@ -165,4 +167,5 @@ function run() {
       })
   })
 }
+// Run the script
 run()

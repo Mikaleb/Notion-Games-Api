@@ -63,7 +63,9 @@ function getScreenshot(result: any) {
     }
   )
   console.log('screenshots', screenshots)
-  if (screenshots.length > 0) return screenshots[0]?.image
+  // get first element that is not undefined
+  const screenshot = screenshots.find((res: any) => res)
+  if (screenshot) return screenshot?.image
   return result.background_image
 }
 
