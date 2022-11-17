@@ -308,15 +308,11 @@ export class GamesService {
    * @returns GameSingle
    * @throws ApiError
    */
-  public static gamesRead(
-    id: number,
-    id: string
-  ): CancelablePromise<GameSingle> {
+  public static gamesRead(id: string): CancelablePromise<GameSingle> {
     return __request(OpenAPI, {
       method: 'GET',
       url: '/games/{id}',
       path: {
-        id: id,
         id: id,
       },
     })
@@ -330,14 +326,12 @@ export class GamesService {
    * @throws ApiError
    */
   public static gamesAchievementsRead(
-    id: number,
     id: string
   ): CancelablePromise<ParentAchievement> {
     return __request(OpenAPI, {
       method: 'GET',
       url: '/games/{id}/achievements',
       path: {
-        id: id,
         id: id,
       },
     })
@@ -350,15 +344,11 @@ export class GamesService {
    * @returns Movie
    * @throws ApiError
    */
-  public static gamesMoviesRead(
-    id: number,
-    id: string
-  ): CancelablePromise<Movie> {
+  public static gamesMoviesRead(id: string): CancelablePromise<Movie> {
     return __request(OpenAPI, {
       method: 'GET',
       url: '/games/{id}/movies',
       path: {
-        id: id,
         id: id,
       },
     })
@@ -371,15 +361,11 @@ export class GamesService {
    * @returns Reddit
    * @throws ApiError
    */
-  public static gamesRedditRead(
-    id: number,
-    id: string
-  ): CancelablePromise<Reddit> {
+  public static gamesRedditRead(id: string): CancelablePromise<Reddit> {
     return __request(OpenAPI, {
       method: 'GET',
       url: '/games/{id}/reddit',
       path: {
-        id: id,
         id: id,
       },
     })
@@ -392,15 +378,11 @@ export class GamesService {
    * @returns GameSingle
    * @throws ApiError
    */
-  public static gamesSuggestedRead(
-    id: number,
-    id: string
-  ): CancelablePromise<GameSingle> {
+  public static gamesSuggestedRead(id: string): CancelablePromise<GameSingle> {
     return __request(OpenAPI, {
       method: 'GET',
       url: '/games/{id}/suggested',
       path: {
-        id: id,
         id: id,
       },
     })
@@ -413,15 +395,11 @@ export class GamesService {
    * @returns Twitch
    * @throws ApiError
    */
-  public static gamesTwitchRead(
-    id: number,
-    id: string
-  ): CancelablePromise<Twitch> {
+  public static gamesTwitchRead(id: string): CancelablePromise<Twitch> {
     return __request(OpenAPI, {
       method: 'GET',
       url: '/games/{id}/twitch',
       path: {
-        id: id,
         id: id,
       },
     })
@@ -434,15 +412,11 @@ export class GamesService {
    * @returns Youtube
    * @throws ApiError
    */
-  public static gamesYoutubeRead(
-    id: number,
-    id: string
-  ): CancelablePromise<Youtube> {
+  public static gamesYoutubeRead(id: string): CancelablePromise<Youtube> {
     return __request(OpenAPI, {
       method: 'GET',
       url: '/games/{id}/youtube',
       path: {
-        id: id,
         id: id,
       },
     })

@@ -3,7 +3,8 @@ import {
   GetPagePropertyParameters,
   PropertyItemPropertyItemListResponse,
 } from '@notionhq/client/build/src/api-endpoints'
-
+import { Game } from './types/api/models/Game'
+import { AxiosError, AxiosResponse } from 'axios'
 const { Client } = require('@notionhq/client')
 
 const dotenv = require('dotenv')
@@ -23,12 +24,11 @@ function getApiResults(search: string) {
       key: process.env.API_KEY,
     },
   })
-    .then((response: { data: any }) => {
-      console.log('response api', response)
+    .then((response: AxiosResponse) => {
       const { data } = response
       return data
     })
-    .catch((error: any) => {
+    .catch((error: AxiosError) => {
       console.log(
         '🚀 ~ file: index.ts ~ line 28 ~ getApiResults ~ error',
         error
@@ -37,7 +37,7 @@ function getApiResults(search: string) {
     })
 }
 
-function getNotionProperty(id: any) {
+function getNotionProperty(id: string) {
   return notion.pages.properties.retrieve({
     page_id: id,
     property_id: 'title',
@@ -67,7 +67,7 @@ function getScreenshot(result: any) {
   return result.background_image
 }
 
-function updateNotionPage(pageId: any, result: any) {
+function updateNotionPage(pageId: string, result: Game) {
   notion.pages
     .update({
       page_id: pageId,
@@ -112,7 +112,7 @@ function updateNotionPage(pageId: any, result: any) {
         type: 'external',
       },
     })
-    .catch((error: any) => {
+    .catch((error: AxiosError) => {
       console.log(error)
     })
     .then(() => {
@@ -143,4 +143,5 @@ async function run() {
     })
 }
 
+// Run the script
 run()

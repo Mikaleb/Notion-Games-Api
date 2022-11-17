@@ -42,15 +42,11 @@ export class CreatorsService {
    * @returns PersonSingle
    * @throws ApiError
    */
-  public static creatorsRead(
-    id: number,
-    id: string
-  ): CancelablePromise<PersonSingle> {
+  public static creatorsRead(id: string): CancelablePromise<PersonSingle> {
     return __request(OpenAPI, {
       method: 'GET',
       url: '/creators/{id}',
       path: {
-        id: id,
         id: id,
       },
     })
